@@ -409,11 +409,18 @@ class SqlCompiler:
         sql = f"SELECT * FROM {from_frag}"
         if wheres:
             sql += f" WHERE {_and(wheres)}"
-        order_sql = ", ".join(
+        sql += f" ORDER BY {self.order_by_clause(node)}"
+        return sql
+
+    @staticmethod
+    def order_by_clause(node: ast.OrderBy) -> str:
+        """Just the ``col1 ASC, col2 DESC, ...`` text (no ``ORDER BY``
+        keyword) — used by the engine to re-apply sorting at the very
+        outermost query, since SQL never guarantees an ORDER BY inside a
+        subquery survives being wrapped by an outer query."""
+        return ", ".join(
             f"{_compile_column_ref(a.col)} {'ASC' if a.ascending else 'DESC'}" for a in node.args
         )
-        sql += f" ORDER BY {order_sql}"
-        return sql
 
     # ---- set operators -----------------------------------------------------
     def _compile_set_op(self, node, sql_op: str) -> str:

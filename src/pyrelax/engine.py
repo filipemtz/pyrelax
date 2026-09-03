@@ -4,19 +4,32 @@ Public entry point: ``RelAlgEngine``.
 Registering a pandas DataFrame with DuckDB is one line
 (``con.register(name, df)``) — exactly as easy as creating the DataFrame
 itself — so that's the whole "setup cost" of this backend.
+
+Multi-statement scripts (``nome = expr`` assignments followed by a final
+expression) are handled by *substituting* each assignment's AST into
+later statements wherever its name is referenced (see ``substitute.py``),
+rather than materialising it as an opaque intermediate relation. This
+matters: relational-algebra conditions can reference a relation alias
+from anywhere in the same "join scope" (e.g. ``enrollment.student_id``
+inside a join condition), and that only keeps working after
+``x = sigma ... (enrollment)`` if referencing ``x`` later is exactly as
+if ``sigma ... (enrollment)`` had been pasted in place — i.e. assignment
+is a name for an expression, not a rename to a new opaque relation.
 """
 
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, Optional
+from typing import Dict, Optional
 
 import duckdb
 import pandas as pd
 
+from . import ast_nodes as ast
 from .errors import RelAlgExecutionError, RelAlgSyntaxError
 from .parser import parse_relalg_expression
-from .sql_compiler import SqlCompiler, quote_ident
+from .sql_compiler import SqlCompiler
+from .substitute import substitute
 
 _ASSIGNMENT_LINE_RE = re.compile(r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*(?::=|<-|\u2190|=)\s*(.+)$")
 
@@ -55,17 +68,31 @@ class RelAlgEngine:
         if not statements:
             raise RelAlgExecutionError("empty query: no expression to evaluate")
 
-        registered: Dict[str, Any] = dict(self.tables)  # name -> DataFrame | _AsView
-        last_sql: Optional[str] = None
-        for var_name, expr_text in statements:
-            sql = self._compile(expr_text, registered)
-            last_sql = sql
-            if var_name is not None:
-                registered[var_name] = _AsView(sql)
+        for name, df in self.tables.items():
+            self._con.register(name, df)
 
-        final_sql = f"SELECT * FROM ({last_sql}) AS _result"
-        if eliminate_duplicates:
-            final_sql = f"SELECT DISTINCT * FROM ({last_sql}) AS _result"
+        env: Dict[str, ast.RelExpr] = {}
+        last_ast: Optional[ast.RelExpr] = None
+        for var_name, expr_text in statements:
+            raw_ast = parse_relalg_expression(expr_text)
+            last_ast = substitute(raw_ast, env)
+            if var_name is not None:
+                env[var_name] = last_ast
+
+        compiler = SqlCompiler(self._con)
+        try:
+            body_sql = compiler.compile_select(last_ast)
+        except duckdb.Error as e:
+            raise RelAlgExecutionError(str(e)) from e
+
+        select_kw = "SELECT DISTINCT" if eliminate_duplicates else "SELECT"
+        final_sql = f"{select_kw} * FROM ({body_sql}) AS _result"
+        if isinstance(last_ast, ast.OrderBy):
+            # An ORDER BY inside `body_sql` isn't guaranteed to survive
+            # being wrapped by the DISTINCT/final SELECT above, so
+            # re-apply the same ordering at the outermost level too.
+            final_sql += f" ORDER BY {SqlCompiler.order_by_clause(last_ast)}"
+
         try:
             return self._con.sql(final_sql).df()
         except duckdb.Error as e:
@@ -100,34 +127,6 @@ class RelAlgEngine:
                         break  # let the real parse error surface later
             statements.append((var_name, buf))
         return statements
-
-    # ---- internals -------------------------------------------------------
-    def _compile(self, expr_text: str, registered: Dict[str, Any]) -> str:
-        for name, value in registered.items():
-            if isinstance(value, pd.DataFrame):
-                self._con.register(name, value)
-            else:
-                # a previously-assigned intermediate relation: expose it as
-                # a view so later statements can reference it by name too.
-                try:
-                    self._con.execute(f"CREATE OR REPLACE TEMP VIEW {quote_ident(name)} AS {value.sql}")
-                except duckdb.Error as e:
-                    raise RelAlgExecutionError(str(e)) from e
-
-        ast_node = parse_relalg_expression(expr_text)
-        compiler = SqlCompiler(self._con)
-        try:
-            return compiler.compile_select(ast_node)
-        except duckdb.Error as e:
-            raise RelAlgExecutionError(str(e)) from e
-
-
-class _AsView:
-    """Marks a registered name as "already compiled SQL for a temp view"
-    rather than a raw DataFrame."""
-
-    def __init__(self, sql: str):
-        self.sql = sql
 
 
 def execute_query(query: str, tables: Dict[str, pd.DataFrame], eliminate_duplicates: bool = True) -> pd.DataFrame:
