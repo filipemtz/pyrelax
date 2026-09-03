@@ -1,0 +1,232 @@
+// ==========================================================================
+// Grammar for a RelaX-compatible relational-algebra language.
+// Parsed with lark's Earley algorithm (the language has a couple of
+// genuine local ambiguities — e.g. "rho NAME (" vs "rho NAME <-" and
+// "join <bare-name>" being either a natural join or a theta-join whose
+// condition is a single column — which Earley resolves by simply
+// discarding parses that don't lead to a complete, valid expression).
+// ==========================================================================
+
+?start: expr
+
+// ---- expression_precedence4: union / difference -------------------------
+?expr: p3
+     | expr UNION p3        -> union
+     | expr DIFFERENCE p3   -> difference
+
+// ---- expression_precedence3: intersect -----------------------------------
+?p3: p2
+   | p3 INTERSECT p2        -> intersect
+
+// ---- expression_precedence2: joins / division ----------------------------
+?p2: p1
+   | p2 CROSS_JOIN p1                         -> cross_join
+   | p2 INNER_JOIN_OP bool_expr p1            -> theta_join
+   | p2 INNER_JOIN_OP p1                      -> natural_join
+   | p2 NATURAL_JOIN_KW p1                    -> natural_join
+   | p2 LEFT_OUTER_JOIN_OP bool_expr p1       -> left_outer_join
+   | p2 LEFT_OUTER_JOIN_OP p1                 -> left_outer_join
+   | p2 RIGHT_OUTER_JOIN_OP bool_expr p1      -> right_outer_join
+   | p2 RIGHT_OUTER_JOIN_OP p1                -> right_outer_join
+   | p2 FULL_OUTER_JOIN_OP bool_expr p1       -> full_outer_join
+   | p2 FULL_OUTER_JOIN_OP p1                 -> full_outer_join
+   | p2 LEFT_SEMI_JOIN_OP p1                  -> left_semi_join
+   | p2 RIGHT_SEMI_JOIN_OP p1                 -> right_semi_join
+   | p2 ANTI_JOIN_OP bool_expr p1             -> anti_join
+   | p2 ANTI_JOIN_OP p1                       -> anti_join
+   | p2 DIVISION p1                           -> division
+
+// ---- expression_precedence1: unary prefix operators ----------------------
+?p1: TAU order_by_args p1                       -> order_by
+   | GAMMA group_by_args p1                     -> group_by
+   | RHO NAME "(" expr ")"                      -> rename_relation
+   | RHO col_assignment_list p1                 -> rename_columns
+   | SIGMA bool_expr p1                         -> selection
+   | PI named_column_expr_list p1               -> projection
+   | p0
+
+// ---- expression_precedence0: table / relation / ( expr ) ----------------
+?p0: "(" expr ")"
+   | inline_table
+   | NAME                                       -> relation
+
+inline_table: "{" "}"                            -> table_dum
+            | "{" "(" ")" "}"                     -> table_dee
+
+// ---- pi argument ----------------------------------------------------------
+named_column_expr_list: named_column_expr ("," named_column_expr)*
+
+?named_column_expr: NAME "." "*"                 -> star_qualified
+                   | "*"                          -> star
+                   | NAME ARROW_LEFT bool_expr     -> named_expr_left
+                   | bool_expr ARROW_RIGHT NAME     -> named_expr_right
+                   | column_name
+
+// ---- rho argument: column assignment list --------------------------------
+col_assignment_list: col_assignment ("," col_assignment)*
+
+?col_assignment: NAME ARROW_LEFT column_name      -> col_assignment_left
+               | column_name ARROW_RIGHT NAME      -> col_assignment_right
+
+// ---- tau argument -----------------------------------------------------
+order_by_args: order_by_arg ("," order_by_arg)*
+order_by_arg: column_name ASC?                   -> order_by_asc
+            | column_name DESC                    -> order_by_desc
+
+// ---- gamma argument -----------------------------------------------------
+group_by_args: column_name ("," column_name)* ";" agg_call_list  -> group_by_full
+             | ";"? agg_call_list                                -> group_by_aggs_only
+
+agg_call_list: agg_call ("," agg_call)*
+
+?agg_call: NAME ARROW_LEFT agg_func               -> agg_call_left
+         | agg_func ARROW_RIGHT NAME               -> agg_call_right
+
+agg_func: AGG_FUNC_NAME "(" column_name ")"        -> agg_func_col
+        | COUNT_KW "(" "*" ")"                      -> agg_func_count_all
+
+// ---- column name -----------------------------------------------------
+column_name: NAME "." NAME                        -> qualified_column
+           | NAME                                  -> unqualified_column
+
+// ==========================================================================
+// value expressions, precedence 9 (loosest) .. 0 (tightest)
+// ==========================================================================
+
+?bool_expr: v9
+
+?v9: v8
+   | v9 OR_KW v8            -> or_
+   | v9 CONCAT v8            -> concat
+
+?v8: v7
+   | v8 XOR_KW v7            -> xor_
+
+?v7: v6
+   | v7 AND_KW v6            -> and_
+
+?v6: CASE_KW when_clause+ else_clause? END_KW     -> case_when
+   | v5
+
+when_clause: WHEN_KW v5 THEN_KW v5
+else_clause: ELSE_KW v5
+
+?v5: v4
+   | v5 NOT_KW BETWEEN_KW v4 AND_KW v4    -> not_between
+   | v5 BETWEEN_KW v4 AND_KW v4            -> between
+   | v5 CMP_OP v4                          -> comparison
+   | v5 LIKE_KW v0                         -> like_op
+   | v5 ILIKE_KW v0                        -> ilike_op
+   | v5 REGEXP_KW v0                       -> regexp_op
+
+?v4: v3
+   | v4 "+" v3               -> add
+   | v4 "-" v3               -> sub
+
+?v3: v2
+   | v3 "*" v2               -> mul
+   | v3 "/" v2               -> div
+   | v3 "%" v2               -> mod
+
+?v2: "-" v2                  -> negate
+   | v1
+
+?v1: NOT_BANG v5              -> not_
+   | v0
+
+?v0: NUMBER                   -> number_const
+   | STRING                   -> string_const
+   | TRUE_KW                  -> true_const
+   | FALSE_KW                 -> false_const
+   | NULL_KW                  -> null_const
+   | "(" v9 ")"
+   | func_call
+   | column_name              -> column_ref
+
+func_call: FUNC_NULLARY "(" ")"                                    -> call_nullary
+         | FUNC_UNARY "(" v9 ")"                                    -> call_unary
+         | "substring"i "(" v9 "," v9 "," v9 ")"                     -> call_substring3
+         | "substring"i "(" v9 "," v9 ")"                            -> call_substring2
+         | "substring"i "(" v9 FROM_KW v9 FOR_KW v9 ")"               -> call_substring3
+         | "substring"i "(" v9 FROM_KW v9 ")"                         -> call_substring2
+         | FUNC_BINARY "(" v9 "," v9 ")"                             -> call_binary
+         | "cast"i "(" v9 AS_KW NAME ")"                              -> call_cast
+         | FUNC_NARY "(" v9 ("," v9)* ")"                              -> call_nary
+
+// ==========================================================================
+// terminals
+// ==========================================================================
+
+// symbol operators (unicode + a couple of ascii aliases) ------------------
+UNION.5: "\u222a" | "union"i
+DIFFERENCE.5: "-" | "\\" | "except"i
+INTERSECT.5: "\u2229" | "intersect"i
+DIVISION.5: "\u00f7" | "/"
+CROSS_JOIN.5: "\u2a2f" | /cross\s+join/i | /(?<![a-zA-Z0-9_])x(?![a-zA-Z0-9_])/
+INNER_JOIN_OP.5: "\u2a1d" | "\u22c8" | /(inner\s+)?join/i
+NATURAL_JOIN_KW.5: /natural\s+join/i
+LEFT_OUTER_JOIN_OP.5: "\u27d5" | /left\s+(outer\s+)?join/i
+RIGHT_OUTER_JOIN_OP.5: "\u27d6" | /right\s+(outer\s+)?join/i
+FULL_OUTER_JOIN_OP.5: "\u27d7" | /full\s+(outer\s+)?join/i
+LEFT_SEMI_JOIN_OP.5: "\u22c9" | /left\s+semi\s+join/i
+RIGHT_SEMI_JOIN_OP.5: "\u22ca" | /right\s+semi\s+join/i
+ANTI_JOIN_OP.5: "\u25b7" | /anti(\s+semi)?\s+join/i
+
+TAU.5: "\u03c4" | "tau"i
+GAMMA.5: "\u03b3" | "gamma"i
+RHO.5: "\u03c1" | "rho"i
+SIGMA.5: "\u03c3" | "sigma"i
+PI.5: "\u03c0" | "pi"i
+
+ARROW_LEFT.4: "\u2190" | "<-"
+ARROW_RIGHT.4: "\u2192" | "->"
+ASC.4: "asc"i
+DESC.4: "desc"i
+
+AGG_FUNC_NAME.4: "sum"i | "count"i | "avg"i | "min"i | "max"i
+COUNT_KW.4: "count"i
+
+AND_KW.4: "and"i | "\u2227"
+OR_KW.4: "or"i | "\u2228"
+XOR_KW.4: "xor"i | "\u22bb"
+NOT_KW.4: "not"i
+NOT_BANG: "!" | "\u00ac"
+CASE_KW.4: "case"i
+WHEN_KW.4: "when"i
+THEN_KW.4: "then"i
+ELSE_KW.4: "else"i
+END_KW.4: "end"i
+BETWEEN_KW.4: "between"i
+LIKE_KW.4: "like"i
+ILIKE_KW.4: "ilike"i
+REGEXP_KW.4: "regexp"i | "rlike"i
+TRUE_KW.4: "true"i
+FALSE_KW.4: "false"i
+NULL_KW.4: "null"i
+FROM_KW.4: "from"i
+FOR_KW.4: "for"i
+AS_KW.4: "as"i
+
+CMP_OP: "!=" | "<>" | ">=" | "<=" | "=" | ">" | "<" | "\u2260" | "\u2265" | "\u2264"
+CONCAT: "||"
+
+FUNC_NULLARY.3: "rand"i | "rownum"i | "now"i | "current_timestamp"i | "sysdate"i \
+              | "transaction_timestamp"i | "statement_timestamp"i | "clock_timestamp"i
+FUNC_UNARY.3: "upper"i | "ucase"i | "lower"i | "lcase"i | "reverse"i | "length"i \
+            | "abs"i | "floor"i | "ceil"i | "round"i | "sqrt"i | "exp"i | "ln"i \
+            | "year"i | "month"i | "dayofmonth"i | "day"i | "hour"i | "minute"i | "second"i \
+            | "date"i
+FUNC_BINARY.3: "adddate"i | "subdate"i | "mod"i | "power"i | "log"i | "repeat"i \
+             | "add"i | "sub"i | "mul"i
+FUNC_NARY.3: "coalesce"i | "concat"i | "replace"i
+
+NAME: /[A-Za-z_][A-Za-z0-9_]*/
+NUMBER: /\d+(\.\d+)?/
+STRING: /'[^'\n]*'/
+
+%import common.WS
+%ignore WS
+LINE_COMMENT: /--[^\n]*/
+BLOCK_COMMENT: /\/\*(.|\n)*?\*\//
+%ignore LINE_COMMENT
+%ignore BLOCK_COMMENT
