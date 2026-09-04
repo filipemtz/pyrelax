@@ -27,3 +27,9 @@ Repository = "https://github.com/filipemtz/pyrelax"
 
 [project.scripts]
 pyrelax_demo = "pyrelax.apps.run_demo:main"
+
+[tool.setuptools.package-data]
+pyrelax = [
+    "data/*.txt",
+    "grammar.lark",
+]
