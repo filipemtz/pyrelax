@@ -1,0 +1,402 @@
+group: SB - Progetti - by Torlone
+category@en: IIS Savoia Benincasa
+description[[Schema dei dati per il modulo di Algebra delle Relazioni, relazioni tratte da {'<'}http://torlone.dia.uniroma3.it/bd/Es1.pdf>
+
+```plantuml
+@startuml
+hide circle
+hide methods
+left to right direction
+
+class Dipartimento{
+  **codice**: number
+  nome: string
+  sede: string
+  //direttore//: number
+}
+
+class Impiegato {
+	**matricola**: number
+	cognome: string
+	stipendio: number
+	//dipartimento//: number
+}
+
+Impiegato "1" -- "0..1" Dipartimento : diretto <
+Dipartimento "1" -- "n" Impiegato : afferisce <
+
+class Partecipazione {
+  **//impiegato//**
+  **//progetto//**
+}
+
+class Progetto {
+  **sigla**: string
+  nome: string
+  bilancio: number
+  //responsabile//: number
+}
+
+Impiegato "1" -- "n" Partecipazione
+Partecipazione "n" -- "1" Progetto
+
+Impiegato "1" -- "0..n" Progetto : responsabile <
+@enduml
+```
+]]
+
+	Impiegato = { matricola:number,cognome:string,stipendio:number,dipartimento:number
+	1,'Rossi',63000,1
+	2,'Verdi',58000,2
+	3,'Bianchi',77000,3
+	4,'Marroni',51000,4
+	5,'Gialli',19000,1
+	6,'Viola',42000,5
+	7,'Arancioni',35000,3
+	8,'Celesti',36000,3
+	9,'Ciano',24500,3
+	10,'Panna',65000,4
+	11,'Rosa',49000,5
+	}
+
+Dipartimento = { codice:number,nome:string,sede:string,direttore:number
+	1,'Amministrazione','Roma',1
+	2,'Produzione','Ancona',2
+	3,'Marketing','Roma',3
+	4,'Vendite','Milano',4
+	5,'Risorse,umane','Milano',6
+	}
+
+Progetto = { sigla:string,nome:string,bilancio:number,responsabile:number
+'NCP','Nuova,campagna,pubblicitaria',50000,3
+'RCD','Riorganizzazione,canali,digitali',15000,3
+'SEL','Nuovo,modulo,vendite,ERP',250000,4
+'FID','Integrazione,programma,fedeltà,nuovo,modulo,vendite',80000,4
+'OTT','Ottimizzazione,del,processo,produttivo',300000,2
+'CTR','Controllo,del,processo,produttivo,e,analisi,tempi',10000,2
+'EDU','Piano,di,formazione,del,personale,neoassunto',10000,5
+}
+
+Partecipazione = { impiegato:number,progetto:string
+2,'OTT'
+2,'CTR'
+4,'OTT'
+6,'CTR'
+7,'NCP'
+7,'RCD'
+8,'NCP'
+8,'RCD'
+9,'NCP'
+10,'FID'
+10,'SEL'
+11,'EDU'
+}
+
+group: SB - Sakila - un piccolo sottoinsieme
+category@en: IIS Savoia Benincasa
+description: sakila-semplificato-it
+
+attore = {attore_id,nome,cognome
+	2,'NICK','WAHLBERG'
+	3,'ED','CHASE'
+	5,'JOHNNY','LOLLOBRIGIDA'
+	10,'CHRISTIAN','GABLE'
+	12,'KARL','BERRY'
+	13,'UMA','WOOD'
+	19,'BOB','FAWCETT'
+	21,'KIRSTEN','PALTROW'
+	22,'ELVIS','MARX'
+	23,'SANDRA','KILMER'
+	24,'CAMERON','STREEP'
+	25,'KEVIN','BLOOM'
+	26,'RIP','CRAWFORD'
+	27,'JULIA','MCQUEEN'
+	28,'WOODY','HOFFMAN'
+	29,'ALEC','WAYNE'
+	35,'JUDY','DEAN'
+	36,'BURT','DUKAKIS'
+	37,'VAL','BOLGER'
+	40,'JOHNNY','CAGE'
+	41,'JODIE','DEGENERES'
+	43,'KIRK','JOVOVICH'
+	45,'REESE','KILMER'
+	51,'GARY','PHOENIX'
+	52,'CARMEN','HUNT'
+	53,'MENA','TEMPLE'
+	55,'FAY','KILMER'
+	57,'JUDE','CRUISE'
+	59,'DUSTIN','TAUTOU'
+	62,'JAYNE','NEESON'
+	64,'RAY','JOHANSSON'
+	68,'RIP','WINSLET'
+	69,'KENNETH','PALTROW'
+	75,'BURT','POSEY'
+	77,'CARY','MCCONAUGHEY'
+	81,'SCARLETT','DAMON'
+	82,'WOODY','JOLIE'
+	84,'JAMES','PITT'
+	85,'MINNIE','ZELLWEGER'
+	88,'KENNETH','PESCI'
+	90,'SEAN','GUINESS'
+	91,'CHRISTOPHER','BERRY'
+	94,'KENNETH','TORN'
+	96,'GENE','WILLIS'
+	99,'JIM','MOSTEL'
+	100,'SPENCER','DEPP'
+	102,'WALTER','TORN'
+	103,'MATTHEW','LEIGH'
+	104,'PENELOPE','CRONYN'
+	105,'SIDNEY','CROWE'
+	108,'WARREN','NOLTE'
+	109,'SYLVESTER','DERN'
+	110,'SUSAN','DAVIS'
+	114,'MORGAN','MCDORMAND'
+	117,'RENEE','TRACY'
+	119,'WARREN','JACKMAN'
+	123,'JULIANNE','DENCH'
+	126,'FRANCES','TOMEI'
+	130,'GRETA','KEITEL'
+	133,'RICHARD','PENN'
+	136,'ED','MANSFIELD'
+	137,'MORGAN','WILLIAMS'
+	138,'LUCILLE','DEE'
+	139,'EWAN','GOODING'
+	142,'JADA','RYDER'
+	144,'ANGELA','WITHERSPOON'
+	146,'ALBERT','JOHANSSON'
+	147,'FAY','WINSLET'
+	155,'IAN','TANDY'
+	157,'GRETA','MALDEN'
+	159,'LAURA','BRODY'
+	160,'CHRIS','DEPP'
+	162,'OPRAH','KILMER'
+	164,'HUMPHREY','WILLIS'
+	167,'LAURENCE','BULLOCK'
+	169,'KENNETH','HOFFMAN'
+	170,'MENA','HOPPER'
+	174,'MICHAEL','BENING'
+	175,'WILLIAM','HACKMAN'
+	176,'JON','CHASE'
+	177,'GENE','MCKELLEN'
+	180,'JEFF','SILVERSTONE'
+	181,'MATTHEW','CARREY'
+	185,'MICHAEL','BOLGER'
+	187,'RENEE','BALL'
+	188,'ROCK','DUKAKIS'
+	191,'GREGORY','GOODING'
+	192,'JOHN','SUVARI'
+	194,'MERYL','ALLEN'
+	197,'REESE','WEST'
+	200,'THORA','TEMPLE'
+}
+
+categoria = {categoria_id,nome
+	1,'Action'
+	2,'Animation'
+	4,'Classics'
+	5,'Comedy'
+	6,'Documentary'
+	8,'Family'
+	9,'Foreign'
+	11,'Horror'
+	12,'Music'
+	15,'Sports'
+}
+
+film = {film_id,titolo,descrizione,anno
+	2,'ACE GOLDFINGER','A Astounding Epistle of a Database Administrator And a Explorer who must Find a Car in Ancient China','2006'
+	3,'ADAPTATION HOLES','A Astounding Reflection of a Lumberjack And a Car who must Sink a Lumberjack in A Baloon Factory','2006'
+	4,'AFFAIR PREJUDICE','A Fanciful Documentary of a Frisbee And a Lumberjack who must Chase a Monkey in A Shark Tank','2006'
+	5,'AFRICAN EGG','A Fast-Paced Documentary of a Pastry Chef And a Dentist who must Pursue a Forensic Psychologist in The Gulf of Mexico','2006'
+	6,'AGENT TRUMAN','A Intrepid Panorama of a Robot And a Boy who must Escape a Sumo Wrestler in Ancient China','2006'
+	7,'AIRPLANE SIERRA','A Touching Saga of a Hunter And a Butler who must Discover a Butler in A Jet Boat','2006'
+	8,'AIRPORT POLLOCK','A Epic Tale of a Moose And a Girl who must Confront a Monkey in Ancient India','2006'
+	9,'ALABAMA DEVIL','A Thoughtful Panorama of a Database Administrator And a Mad Scientist who must Outgun a Mad Scientist in A Jet Boat','2006'
+	10,'ALADDIN CALENDAR','A Action-Packed Tale of a Man And a Lumberjack who must Reach a Feminist in Ancient China','2006'
+	11,'ALAMO VIDEOTAPE','A Boring Epistle of a Butler And a Cat who must Fight a Pastry Chef in A MySQL Convention','2006'
+	12,'ALASKA PHANTOM','A Fanciful Saga of a Hunter And a Pastry Chef who must Vanquish a Boy in Australia','2006'
+	13,'ALI FOREVER','A Action-Packed Drama of a Dentist And a Crocodile who must Battle a Feminist in The Canadian Rockies','2006'
+	14,'ALICE FANTASIA','A Emotional Drama of a A Shark And a Database Administrator who must Vanquish a Pioneer in Soviet Georgia','2006'
+	15,'ALIEN CENTER','A Brilliant Drama of a Cat And a Mad Scientist who must Battle a Feminist in A MySQL Convention','2006'
+	16,'ALLEY EVOLUTION','A Fast-Paced Drama of a Robot And a Composer who must Battle a Astronaut in New Orleans','2006'
+	17,'ALONE TRIP','A Fast-Paced Character Study of a Composer And a Dog who must Outgun a Boat in An Abandoned Fun House','2006'
+	18,'ALTER VICTORY','A Thoughtful Drama of a Composer And a Feminist who must Meet a Secret Agent in The Canadian Rockies','2006'
+	19,'AMADEUS HOLY','A Emotional Display of a Pioneer And a Technical Writer who must Battle a Man in A Baloon','2006'
+	20,'AMELIE HELLFIGHTERS','A Boring Drama of a Woman And a Squirrel who must Conquer a Student in A Baloon','2006'
+	21,'AMERICAN CIRCUS','A Insightful Drama of a Girl And a Astronaut who must Face a Database Administrator in A Shark Tank','2006'
+}
+
+film_attore = {attore_id,film_id
+	19,2
+	85,2
+	90,2
+	160,2
+	2,3
+	19,3
+	24,3
+	64,3
+	123,3
+	41,4
+	81,4
+	88,4
+	147,4
+	162,4
+	51,5
+	59,5
+	103,5
+	181,5
+	200,5
+	21,6
+	23,6
+	62,6
+	108,6
+	137,6
+	169,6
+	197,6
+	99,7
+	133,7
+	162,7
+	170,7
+	185,7
+	55,8
+	138,8
+	10,9
+	22,9
+	26,9
+	53,9
+	68,9
+	108,9
+	130,9
+	175,9
+	194,9
+	29,10
+	35,10
+	37,10
+	64,10
+	117,10
+	142,10
+	157,10
+	188,10
+	40,11
+	81,11
+	90,11
+	174,11
+	37,12
+	75,12
+	105,12
+	109,12
+	146,12
+	177,12
+	180,12
+	77,13
+	91,13
+	94,13
+	114,13
+	176,13
+	28,14
+	85,14
+	137,14
+	188,14
+	36,15
+	69,15
+	105,15
+	117,15
+	164,15
+	170,15
+	12,16
+	57,16
+	146,16
+	191,16
+	192,16
+	3,17
+	12,17
+	13,17
+	82,17
+	100,17
+	160,17
+	167,17
+	187,17
+	45,18
+	142,18
+	144,18
+	162,18
+	5,19
+	27,19
+	84,19
+	104,19
+	52,20
+	102,20
+	136,20
+	139,20
+	25,21
+	26,21
+	105,21
+	119,21
+	126,21
+}
+
+film_categoria = {film_id,categoria_id
+	2,11
+	3,6
+	4,11
+	5,8
+	6,9
+	7,5
+	8,11
+	9,11
+	10,15
+	11,9
+	12,12
+	13,11
+	14,4
+	15,9
+	16,9
+	17,12
+	18,2
+	19,1
+	20,12
+	21,1
+}
+
+group: SB - Corsi - by Hugh Darwen
+category@en: IIS Savoia Benincasa
+description[[Schema dei dati tratti da Hugh Darwen, "An Introduction to Relational Database Theory". 2014 ]]
+
+iscrizione={studentId:string,name:string,courseId:string
+'S1','Anne','C1'
+'S1','Anne','C2'
+'S2','Boris','C1'
+'S3','Cindy','C3'
+'S4','Devinder','C1'
+}
+
+si_chiama={studentId:string,name:string
+'S1','Anne'
+'S2','Boris'
+'S3','Cindy'
+'S4','Devinder'
+'S5', 'Boris'
+}
+
+e_iscritto_a={studentId:string,courseId:string
+'S1','C1'
+'S1','C2'
+'S2','C1'
+'S3','C3'
+'S4','C1'
+}
+
+corso={courseId:string,title:string
+'C1','Database'
+'C2','HCI'
+'C3','Op Systems'
+'C4','Programming'
+}
+
+voto_esame={studentId:string,courseId:string,mark:number
+'S1','C1',85
+'S1','C2',49
+'S2','C1',49
+'S3','C3',66
+'S4','C1',93
+}

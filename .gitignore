@@ -16,7 +16,6 @@ eggs/
 .installed.cfg
 *.egg
 *.egg-info/
-data/
 
 # Virtual Environments
 .venv/
