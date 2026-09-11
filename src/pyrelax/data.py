@@ -330,7 +330,6 @@ def _load_all_databases():
     dbs = {}
 
     for file in glob(str(files("pyrelax").joinpath("data/*.txt"))):
-        print(f"loading database '{file}'")
         dbs.update(
             {
                 name: contents["tables"]

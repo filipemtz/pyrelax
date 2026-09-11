@@ -19,6 +19,7 @@ dependencies = [
     "duckdb>=0.10",
     "pandas>=1.5",
     "pytest>=7.0",
+    "streamlit>=1.63"
 ]
 
 [project.urls]

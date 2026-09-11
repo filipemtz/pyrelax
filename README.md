@@ -36,7 +36,7 @@ database = {
     "Enrollment": pd.DataFrame(...),
 }
 
-## Students and courses in which they were approved.
+# Students and courses in which they were approved.
 result = execute_query("pi student_name, course_name (sigma grade >= 7  (Student ⨝ Enrollment ⨝ Offering ⨝  Course))", database)
 ```
 

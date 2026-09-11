@@ -6,8 +6,6 @@ from pyrelax.engine import execute_query
 
 
 def main():
-    tables = databases["Mutz - University"]
-
     st.set_page_config(
         page_title="Relational Algebra Interpreter",
         page_icon="",
@@ -20,6 +18,11 @@ def main():
         "Write a relational algebra expression and execute it over the "
         "database shown below."
     )
+
+    names = sorted(databases.keys())
+    default = names.index("Mutz - University")
+    database = st.selectbox("Select a database", names, index=default)
+    tables = databases[database]
 
     st.subheader("Relational algebra expression")
 
