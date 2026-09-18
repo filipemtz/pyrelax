@@ -66,3 +66,46 @@ enrollment = {
     4, 6, 0.0, 0.1
     4, 7, 2.7, 0.7
 }
+
+group: Mutz - Library
+description: Simple example of a Library. Credits: Filipe Mutz
+category@en:Federal University of Espírito Santo
+
+livro = {
+    isbn:string, titulo:string, autor:string, categoria:string, ano:int
+
+    'L1', 'Banco de Dados I', 'Silva', 'Tecnico',2015
+    'L2', 'Algoritmos e Estruturas de Dados', 'Souza', 'Tecnico',2018
+    'L3', 'Dom Casmurro', 'Machado de Assis', 'Literatura',1899
+    'L4', 'Redes de Computadores', 'Costa', 'Tecnico',2020
+    'L5', 'O Cortico', 'Aluisio Azevedo', 'Literatura',1890
+    'L6', ' Harry Potter', 'J. K. Rowling', 'Literatura',2009
+    'L7', ' Senhor dos Aneis', 'J. R. R. Tolkien', 'Literatura',1954
+}
+
+usuario = {
+    id_usuario:string, nome:string, cidade:string
+    'U1', 'Felipe', 'Sao Paulo'
+    'U2', 'Marina', 'Campinas'
+    'U3', 'Joao', 'Sao Paulo'
+    'U4', 'Clara', 'Santos'
+    'U5', 'Jordana', 'Sao Paulo'
+    'U6', 'Rhuan', 'Campinas'
+    'U7', 'Rubens', 'Santos'
+    'U8', 'Robertson', 'Campinas'
+}
+
+emprestimo = {
+    id_usuario:string, isbn:string, data_emprestimo:string, devolvido:string
+    'U1', 'L1', '2026-01-10', 'Sim'
+    'U1', 'L2', '2026-02-05', 'Nao'
+    'U2', 'L3', '2026-01-20', 'Sim'
+    'U3', 'L1', '2026-03-01', 'Nao'
+    'U3', 'L4', '2026-03-15', 'Sim'
+    'U4', 'L3', '2026-02-11', 'Sim'
+    'U4', 'L5', '2026-02-14', 'Sim'
+    'U8', 'L7', '2026-02-23', 'Nao'
+    'U8', 'L1', '2026-03-07', 'Nao'
+    'U8', 'L3', '2026-05-06', 'Nao'
+    'U8', 'L4', '2026-01-02', 'Sim'
+}
