@@ -6,29 +6,7 @@ from pathlib import Path
 import pandas as pd
 
 
-def load_databases(path):
-    """
-    Load databases from a file in the database format.
-
-    Returns
-    -------
-    dict
-        {
-            database_name: {
-                "description": str,
-                "courtesy": str,
-                "category": str,
-                "tables": {
-                    table_name: pandas.DataFrame,
-                    ...
-                }
-            },
-            ...
-        }
-    """
-
-    text = Path(path).read_text(encoding="utf-8")
-
+def load_databases_from_string(text: str):
     # Remove C-style block comments:
     #     /* comment */
     #
@@ -178,6 +156,31 @@ def load_databases(path):
         }
 
     return databases
+
+
+def load_databases(path):
+    """
+    Load databases from a file in the database format.
+
+    Returns
+    -------
+    dict
+        {
+            database_name: {
+                "description": str,
+                "courtesy": str,
+                "category": str,
+                "tables": {
+                    table_name: pandas.DataFrame,
+                    ...
+                }
+            },
+            ...
+        }
+    """
+
+    text = Path(path).read_text(encoding="utf-8")
+    return load_databases_from_string(text)
 
 
 def _split_values(line):

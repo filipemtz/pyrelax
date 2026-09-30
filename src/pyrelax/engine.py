@@ -31,7 +31,9 @@ from .parser import parse_relalg_expression
 from .sql_compiler import SqlCompiler
 from .substitute import substitute
 
-_ASSIGNMENT_LINE_RE = re.compile(r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*(?::=|<-|\u2190|=)\s*(.+)$")
+_ASSIGNMENT_LINE_RE = re.compile(
+    r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*(?::=|<-|\u2190|=)\s*(.+)$"
+)
 
 
 class RelAlgEngine:
@@ -101,7 +103,8 @@ class RelAlgEngine:
     @staticmethod
     def _split_statements(ra_text: str):
         lines = [
-            ln.strip() for ln in ra_text.splitlines()
+            ln.strip()
+            for ln in ra_text.splitlines()
             if ln.strip() and not ln.strip().startswith("--")
         ]
         statements = []  # list of (var_name_or_None, text)
@@ -129,6 +132,8 @@ class RelAlgEngine:
         return statements
 
 
-def execute_query(query: str, tables: Dict[str, pd.DataFrame], eliminate_duplicates: bool = True) -> pd.DataFrame:
+def execute_query(
+    query: str, tables: Dict[str, pd.DataFrame], eliminate_duplicates: bool = True
+) -> pd.DataFrame:
     """Convenience one-shot function: parse + execute `query` against `tables`."""
     return RelAlgEngine(tables).query(query, eliminate_duplicates=eliminate_duplicates)
