@@ -68,7 +68,6 @@ enrollment = {
     4, 7, 2.7, 0.7
 }
 
-<<<<<<< HEAD
 
 group: Mutz - Store
 description: Simple example of an Store. Credits: Filipe Mutz
@@ -1033,7 +1032,6 @@ order_id:int,product_id:int,quantity:int
     180,92,5
 }
 
-=======
 group: Mutz - Library
 description: Simple example of a Library. Credits: Filipe Mutz
 category@en:Federal University of Espírito Santo
@@ -1076,4 +1074,3 @@ emprestimo = {
     'U8', 'L3', '2026-05-06', 'Nao'
     'U8', 'L4', '2026-01-02', 'Sim'
 }
->>>>>>> 0e10bbc27786f791752bdba74d75ee221db6bed8
