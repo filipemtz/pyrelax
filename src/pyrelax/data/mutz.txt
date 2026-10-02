@@ -1074,3 +1074,1189 @@ emprestimo = {
     'U8', 'L3', '2026-05-06', 'Nao'
     'U8', 'L4', '2026-01-02', 'Sim'
 }
+
+
+group: Mutz - Social Media
+description: Simple example of Social Media System. Credits: Filipe Mutz
+category@en:Federal University of Espírito Santo
+
+usuario = {
+id_usuario:int,nome_usuario:string,cidade_usuario:string
+
+    1,'Ana Santos Silva','Vitoria'
+    2,'Bruno Lima Souza','Vila Velha'
+    3,'Carla Souza Oliveira','Serra'
+    4,'Daniel Santos Ferreira','Cariacica'
+    5,'Eduarda Santos Ribeiro','Guarapari'
+    6,'Felipe Pereira Silva','Linhares'
+    7,'Gabriela Silva Santos','Colatina'
+    8,'Henrique Souza Souza','Viana'
+    9,'Isabela Ferreira Ribeiro','Aracruz'
+    10,'Joao Silva Ferreira','Cachoeiro de Itapemirim'
+    11,'Karen Souza Ferreira','Vitoria'
+    12,'Lucas Pereira Souza','Vila Velha'
+    13,'Mariana Almeida Ribeiro','Serra'
+    14,'Nicolas Lima Silva','Cariacica'
+    15,'Olivia Oliveira Pereira','Guarapari'
+    16,'Paulo Costa Lima','Linhares'
+    17,'Rafaela Oliveira Souza','Colatina'
+    18,'Samuel Costa Santos','Viana'
+    19,'Tatiana Santos Pereira','Aracruz'
+    20,'Victor Santos Costa','Cachoeiro de Itapemirim'
+    21,'Amanda Costa Ribeiro','Vitoria'
+    22,'Bernardo Lima Silva','Vila Velha'
+    23,'Camila Almeida Ferreira','Serra'
+    24,'Diego Santos Pereira','Cariacica'
+    25,'Elisa Santos Ferreira','Guarapari'
+    26,'Fernando Lima Ribeiro','Linhares'
+    27,'Giovana Costa Ribeiro','Colatina'
+    28,'Hugo Souza Santos','Viana'
+    29,'Juliana Silva Souza','Aracruz'
+    30,'Leonardo Lima Santos','Cachoeiro de Itapemirim'
+    31,'Ana Souza Santos','Vitoria'
+    32,'Bruno Pereira Lima','Vila Velha'
+    33,'Carla Almeida Costa','Serra'
+    34,'Daniel Oliveira Costa','Cariacica'
+    35,'Eduarda Costa Souza','Guarapari'
+    36,'Felipe Lima Santos','Linhares'
+    37,'Gabriela Ribeiro Oliveira','Colatina'
+    38,'Henrique Ferreira Souza','Viana'
+    39,'Isabela Oliveira Almeida','Aracruz'
+    40,'Joao Pereira Lima','Cachoeiro de Itapemirim'
+    41,'Karen Ferreira Souza','Vitoria'
+    42,'Lucas Costa Silva','Vila Velha'
+    43,'Mariana Souza Silva','Serra'
+    44,'Nicolas Costa Pereira','Cariacica'
+    45,'Olivia Lima Santos','Guarapari'
+    46,'Paulo Souza Ribeiro','Linhares'
+    47,'Rafaela Costa Souza','Colatina'
+    48,'Samuel Almeida Pereira','Viana'
+    49,'Tatiana Almeida Oliveira','Aracruz'
+    50,'Victor Lima Oliveira','Cachoeiro de Itapemirim'
+    51,'Amanda Souza Ferreira','Vitoria'
+    52,'Bernardo Ferreira Lima','Vila Velha'
+    53,'Camila Ribeiro Pereira','Serra'
+    54,'Diego Ribeiro Pereira','Cariacica'
+    55,'Elisa Costa Souza','Guarapari'
+    56,'Fernando Oliveira Ferreira','Linhares'
+    57,'Giovana Almeida Santos','Colatina'
+    58,'Hugo Silva Santos','Viana'
+    59,'Juliana Oliveira Oliveira','Aracruz'
+    60,'Leonardo Pereira Ribeiro','Cachoeiro de Itapemirim'
+}
+
+postagem = {
+id_postagem:int,id_usuario:int,texto_postagem:string
+
+    1,5,'Pôr do sol lindo em Guarapari'
+    2,25,'Musica boa para trabalhar'
+    3,30,'Que calor hoje!'
+    4,17,'Comecei um curso novo'
+    5,1,'Finalmente sexta-feira!'
+    6,44,'Comecei um curso novo'
+    7,18,'Dica de serie para o fim de semana?'
+    8,8,'Que jogo foi esse ontem?'
+    9,28,'Treino feito hoje, bora!'
+    10,30,'Bom dia, pessoal!'
+    11,17,'Que calor hoje!'
+    12,12,'Que calor hoje!'
+    13,7,'Que jogo foi esse ontem?'
+    14,41,'Que calor hoje!'
+    15,39,'Chuva forte na Serra agora'
+    16,10,'Novo projeto comecando hoje'
+    17,11,'Comecei um curso novo'
+    18,34,'Bom dia, pessoal!'
+    19,39,'Dica de serie para o fim de semana?'
+    20,32,'Bom dia, pessoal!'
+    21,8,'Novo projeto comecando hoje'
+    22,20,'Cafe da manha perfeito'
+    23,4,'Cafe da manha perfeito'
+    24,37,'Alguem indica um bom restaurante em Vila Velha?'
+    25,6,'Aprendendo a programar em Python'
+    26,5,'Comecei um curso novo'
+    27,9,'Acabei de terminar um livro incrivel'
+    28,43,'Aprendendo a programar em Python'
+    29,36,'Treino feito hoje, bora!'
+    30,17,'Que calor hoje!'
+    31,39,'Segunda-feira de novo...'
+    32,14,'Comecei um curso novo'
+    33,45,'Chuva forte na Serra agora'
+    34,20,'Pôr do sol lindo em Guarapari'
+    35,43,'Novo projeto comecando hoje'
+    36,29,'Que calor hoje!'
+    37,29,'Finalmente sexta-feira!'
+    38,16,'Cafe da manha perfeito'
+    39,5,'Dica de serie para o fim de semana?'
+    40,2,'Passeio de bike no fim de tarde'
+    41,36,'Cafe da manha perfeito'
+    42,38,'Cafe da manha perfeito'
+    43,1,'Alguem indica um bom restaurante em Vila Velha?'
+    44,41,'Que saudade da praia de Camburi'
+    45,15,'Alguem indica um bom restaurante em Vila Velha?'
+    46,3,'Dica de serie para o fim de semana?'
+    47,5,'Que calor hoje!'
+    48,16,'Estudando para a prova de banco de dados'
+    49,43,'Aprendendo a programar em Python'
+    50,14,'Comecei um curso novo'
+    51,9,'Passeio de bike no fim de tarde'
+    52,37,'Aprendendo a programar em Python'
+    53,16,'Aprendendo a programar em Python'
+    54,27,'Chuva forte na Serra agora'
+    55,7,'Finalmente sexta-feira!'
+    56,43,'Segunda-feira de novo...'
+    57,23,'Segunda-feira de novo...'
+    58,27,'Churrasco de domingo com a familia'
+    59,4,'Finalmente sexta-feira!'
+    60,4,'Pôr do sol lindo em Guarapari'
+    61,22,'Finalmente sexta-feira!'
+    62,16,'Chuva forte na Serra agora'
+    63,13,'Comecei um curso novo'
+    64,29,'Acabei de terminar um livro incrivel'
+    65,28,'Treino feito hoje, bora!'
+    66,18,'Churrasco de domingo com a familia'
+    67,16,'Alguem indica um bom restaurante em Vila Velha?'
+    68,29,'Comecei um curso novo'
+    69,7,'Que saudade da praia de Camburi'
+    70,42,'Comecei um curso novo'
+    71,1,'Alguem indica um bom restaurante em Vila Velha?'
+    72,16,'Treino feito hoje, bora!'
+    73,27,'Aprendendo a programar em Python'
+    74,31,'Chuva forte na Serra agora'
+    75,26,'Que saudade da praia de Camburi'
+    76,11,'Pôr do sol lindo em Guarapari'
+    77,1,'Pôr do sol lindo em Guarapari'
+    78,17,'Churrasco de domingo com a familia'
+    79,19,'Segunda-feira de novo...'
+    80,45,'Comecei um curso novo'
+    81,43,'Aprendendo a programar em Python'
+    82,10,'Chuva forte na Serra agora'
+    83,19,'Chuva forte na Serra agora'
+    84,4,'Passeio de bike no fim de tarde'
+    85,35,'Que saudade da praia de Camburi'
+    86,21,'Que saudade da praia de Camburi'
+    87,4,'Passeio de bike no fim de tarde'
+    88,31,'Que calor hoje!'
+    89,34,'Treino feito hoje, bora!'
+    90,4,'Que calor hoje!'
+    91,6,'Treino feito hoje, bora!'
+    92,5,'Musica boa para trabalhar'
+    93,5,'Cafe da manha perfeito'
+    94,26,'Finalmente sexta-feira!'
+    95,37,'Cafe da manha perfeito'
+    96,38,'Musica boa para trabalhar'
+    97,3,'Musica boa para trabalhar'
+    98,6,'Segunda-feira de novo...'
+    99,43,'Passeio de bike no fim de tarde'
+    100,37,'Que calor hoje!'
+    101,21,'Estudando para a prova de banco de dados'
+    102,14,'Dica de serie para o fim de semana?'
+    103,16,'Estudando para a prova de banco de dados'
+    104,26,'Acabei de terminar um livro incrivel'
+    105,43,'Que jogo foi esse ontem?'
+    106,30,'Dica de serie para o fim de semana?'
+    107,5,'Bom dia, pessoal!'
+    108,30,'Musica boa para trabalhar'
+    109,37,'Finalmente sexta-feira!'
+    110,5,'Comecei um curso novo'
+    111,14,'Que calor hoje!'
+    112,17,'Acabei de terminar um livro incrivel'
+    113,23,'Alguem indica um bom restaurante em Vila Velha?'
+    114,16,'Novo projeto comecando hoje'
+    115,19,'Treino feito hoje, bora!'
+    116,29,'Comecei um curso novo'
+    117,20,'Musica boa para trabalhar'
+    118,42,'Que calor hoje!'
+    119,1,'Comecei um curso novo'
+    120,20,'Finalmente sexta-feira!'
+    121,9,'Estudando para a prova de banco de dados'
+    122,8,'Finalmente sexta-feira!'
+    123,36,'Acabei de terminar um livro incrivel'
+    124,18,'Que jogo foi esse ontem?'
+    125,39,'Chuva forte na Serra agora'
+    126,22,'Chuva forte na Serra agora'
+    127,44,'Estudando para a prova de banco de dados'
+    128,33,'Aprendendo a programar em Python'
+    129,17,'Que saudade da praia de Camburi'
+    130,6,'Segunda-feira de novo...'
+    131,18,'Que saudade da praia de Camburi'
+    132,1,'Dica de serie para o fim de semana?'
+    133,9,'Estudando para a prova de banco de dados'
+    134,11,'Churrasco de domingo com a familia'
+    135,36,'Segunda-feira de novo...'
+    136,36,'Bom dia, pessoal!'
+    137,8,'Alguem indica um bom restaurante em Vila Velha?'
+    138,45,'Acabei de terminar um livro incrivel'
+    139,35,'Que saudade da praia de Camburi'
+    140,24,'Passeio de bike no fim de tarde'
+    141,36,'Acabei de terminar um livro incrivel'
+    142,28,'Acabei de terminar um livro incrivel'
+    143,3,'Que jogo foi esse ontem?'
+    144,24,'Que saudade da praia de Camburi'
+    145,23,'Chuva forte na Serra agora'
+    146,44,'Cafe da manha perfeito'
+    147,43,'Finalmente sexta-feira!'
+    148,23,'Comecei um curso novo'
+    149,27,'Musica boa para trabalhar'
+    150,10,'Cafe da manha perfeito'
+    151,11,'Treino feito hoje, bora!'
+    152,27,'Bom dia, pessoal!'
+    153,12,'Dica de serie para o fim de semana?'
+    154,27,'Cafe da manha perfeito'
+    155,18,'Treino feito hoje, bora!'
+    156,45,'Finalmente sexta-feira!'
+    157,25,'Que saudade da praia de Camburi'
+    158,31,'Cafe da manha perfeito'
+    159,13,'Churrasco de domingo com a familia'
+    160,23,'Que jogo foi esse ontem?'
+    161,15,'Cafe da manha perfeito'
+    162,2,'Chuva forte na Serra agora'
+    163,26,'Dica de serie para o fim de semana?'
+    164,18,'Alguem indica um bom restaurante em Vila Velha?'
+    165,18,'Novo projeto comecando hoje'
+    166,42,'Que calor hoje!'
+    167,26,'Comecei um curso novo'
+    168,22,'Bom dia, pessoal!'
+    169,8,'Estudando para a prova de banco de dados'
+    170,12,'Passeio de bike no fim de tarde'
+    171,17,'Que saudade da praia de Camburi'
+    172,7,'Musica boa para trabalhar'
+    173,28,'Novo projeto comecando hoje'
+    174,21,'Segunda-feira de novo...'
+    175,39,'Que calor hoje!'
+    176,8,'Pôr do sol lindo em Guarapari'
+    177,37,'Chuva forte na Serra agora'
+    178,17,'Que saudade da praia de Camburi'
+    179,28,'Bom dia, pessoal!'
+    180,34,'Comecei um curso novo'
+    181,44,'Chuva forte na Serra agora'
+    182,24,'Segunda-feira de novo...'
+    183,5,'Dica de serie para o fim de semana?'
+    184,40,'Dica de serie para o fim de semana?'
+    185,43,'Finalmente sexta-feira!'
+    186,20,'Que calor hoje!'
+    187,20,'Segunda-feira de novo...'
+    188,21,'Pôr do sol lindo em Guarapari'
+    189,45,'Que jogo foi esse ontem?'
+    190,36,'Acabei de terminar um livro incrivel'
+    191,13,'Segunda-feira de novo...'
+    192,43,'Pôr do sol lindo em Guarapari'
+    193,44,'Treino feito hoje, bora!'
+    194,40,'Passeio de bike no fim de tarde'
+    195,20,'Pôr do sol lindo em Guarapari'
+    196,36,'Bom dia, pessoal!'
+    197,20,'Que jogo foi esse ontem?'
+    198,14,'Segunda-feira de novo...'
+    199,38,'Musica boa para trabalhar'
+    200,42,'Dica de serie para o fim de semana?'
+}
+
+curtida = {
+id_usuario:int,id_postagem:int
+
+    1,47
+    1,68
+    1,91
+    1,105
+    1,108
+    1,142
+    2,12
+    2,13
+    2,24
+    2,45
+    2,47
+    2,101
+    2,102
+    2,156
+    2,160
+    3,10
+    3,14
+    3,57
+    3,60
+    3,63
+    3,64
+    3,82
+    3,89
+    3,95
+    3,117
+    3,149
+    4,2
+    4,21
+    4,40
+    4,49
+    4,86
+    4,90
+    4,91
+    4,95
+    4,102
+    4,123
+    4,151
+    5,16
+    5,21
+    5,24
+    5,37
+    5,41
+    5,60
+    5,71
+    5,74
+    5,85
+    5,102
+    5,107
+    5,121
+    5,130
+    5,131
+    5,148
+    5,152
+    6,24
+    6,55
+    6,62
+    6,64
+    6,76
+    6,81
+    6,102
+    6,110
+    6,112
+    6,121
+    6,136
+    6,157
+    7,4
+    7,30
+    7,50
+    7,60
+    7,63
+    7,78
+    7,113
+    7,116
+    7,135
+    7,143
+    7,148
+    8,2
+    8,7
+    8,8
+    8,17
+    8,25
+    8,36
+    8,50
+    8,89
+    8,104
+    8,117
+    8,120
+    8,143
+    8,145
+    9,4
+    9,39
+    9,71
+    9,100
+    9,108
+    9,119
+    9,122
+    9,129
+    9,139
+    9,143
+    9,145
+    10,7
+    10,16
+    10,17
+    10,39
+    10,60
+    10,62
+    10,63
+    10,66
+    10,99
+    10,113
+    10,115
+    10,124
+    10,145
+    11,19
+    11,45
+    11,62
+    11,66
+    11,79
+    11,85
+    11,94
+    11,156
+    11,159
+    12,13
+    12,14
+    12,34
+    12,52
+    12,125
+    12,127
+    12,142
+    13,45
+    13,56
+    13,90
+    13,99
+    13,154
+    14,18
+    14,36
+    14,60
+    14,69
+    14,78
+    14,91
+    14,97
+    14,108
+    14,114
+    14,151
+    15,17
+    15,18
+    15,24
+    15,28
+    15,30
+    15,46
+    15,49
+    15,51
+    15,86
+    15,99
+    15,104
+    15,106
+    15,148
+    16,23
+    16,27
+    16,38
+    16,41
+    16,52
+    16,70
+    16,74
+    16,98
+    16,119
+    16,138
+    17,14
+    17,21
+    17,45
+    17,60
+    17,83
+    17,87
+    17,88
+    17,98
+    17,123
+    17,151
+    18,1
+    18,3
+    18,37
+    18,38
+    18,47
+    18,49
+    18,56
+    18,79
+    18,80
+    18,83
+    18,108
+    18,112
+    18,113
+    18,114
+    18,116
+    18,129
+    18,151
+    18,152
+    18,153
+    19,20
+    19,30
+    19,59
+    19,65
+    19,73
+    19,77
+    19,84
+    19,92
+    19,103
+    19,113
+    19,132
+    19,152
+    19,154
+    20,4
+    20,28
+    20,87
+    20,91
+    20,100
+    20,113
+    20,118
+    20,119
+    20,127
+    20,142
+    20,146
+    20,148
+    20,149
+    21,15
+    21,31
+    21,44
+    21,49
+    21,55
+    21,66
+    21,81
+    21,107
+    21,110
+    21,114
+    21,148
+    21,155
+    21,156
+    21,157
+    22,8
+    22,22
+    22,24
+    22,32
+    22,38
+    22,41
+    22,63
+    22,82
+    22,83
+    22,90
+    22,91
+    22,98
+    22,117
+    22,130
+    22,137
+    23,38
+    23,61
+    23,86
+    23,105
+    23,109
+    23,143
+    24,26
+    24,30
+    24,34
+    24,40
+    24,46
+    24,73
+    24,80
+    24,111
+    24,122
+    24,136
+    25,39
+    25,82
+    25,87
+    25,105
+    25,116
+    25,117
+    25,123
+    25,137
+    25,150
+    25,153
+    25,159
+    26,6
+    26,51
+    26,107
+    26,110
+    26,126
+    26,135
+    26,154
+    27,16
+    27,24
+    27,26
+    27,40
+    27,72
+    27,85
+    27,91
+    27,117
+    27,124
+    27,127
+    27,138
+    27,151
+    28,5
+    28,25
+    28,26
+    28,29
+    28,30
+    28,46
+    28,83
+    28,93
+    28,116
+    28,141
+    28,144
+    28,147
+    28,151
+    29,5
+    29,10
+    29,21
+    29,27
+    29,41
+    29,43
+    29,55
+    29,61
+    29,67
+    29,77
+    29,78
+    29,88
+    29,89
+    29,107
+    29,135
+    29,145
+    29,147
+    29,153
+    30,4
+    30,13
+    30,20
+    30,31
+    30,33
+    30,66
+    30,74
+    30,78
+    30,84
+    30,95
+    30,106
+    30,107
+    30,112
+    30,114
+    30,130
+    30,142
+    30,145
+    30,149
+    31,5
+    31,7
+    31,28
+    31,63
+    31,75
+    31,76
+    31,115
+    31,123
+    31,129
+    31,133
+    31,157
+    32,8
+    32,10
+    32,28
+    32,57
+    32,62
+    32,75
+    32,84
+    32,103
+    32,111
+    32,114
+    32,135
+    32,143
+    32,150
+    32,156
+    32,158
+    33,1
+    33,19
+    33,35
+    33,45
+    33,55
+    33,57
+    33,70
+    33,99
+    33,122
+    33,144
+    33,152
+    34,30
+    34,49
+    34,76
+    34,93
+    34,106
+    34,131
+    34,157
+    35,10
+    35,21
+    35,32
+    35,58
+    35,92
+    35,110
+    35,120
+    35,124
+    35,127
+    36,3
+    36,11
+    36,34
+    36,64
+    36,75
+    36,84
+    36,94
+    36,136
+    36,140
+    36,144
+    36,153
+    37,11
+    37,13
+    37,47
+    37,56
+    37,58
+    37,73
+    37,76
+    37,78
+    37,92
+    37,99
+    37,157
+    38,6
+    38,7
+    38,77
+    38,83
+    38,85
+    38,98
+    38,110
+    38,112
+    38,145
+    38,149
+    39,1
+    39,11
+    39,22
+    39,30
+    39,40
+    39,57
+    39,65
+    39,73
+    39,91
+    39,111
+    39,128
+    39,146
+    39,153
+    40,12
+    40,16
+    40,18
+    40,26
+    40,58
+    40,65
+    40,102
+    40,118
+    40,128
+    40,130
+    40,137
+    40,138
+    40,143
+    40,144
+    40,150
+    40,153
+    41,11
+    41,14
+    41,25
+    41,30
+    41,55
+    41,71
+    41,96
+    41,109
+    41,114
+    41,118
+    41,119
+    41,125
+    41,126
+    41,148
+    41,156
+    42,2
+    42,8
+    42,21
+    42,24
+    42,39
+    42,40
+    42,49
+    42,70
+    42,88
+    42,105
+    42,114
+    42,126
+    42,142
+    42,153
+    42,160
+    43,3
+    43,7
+    43,22
+    43,27
+    43,30
+    43,51
+    43,69
+    43,79
+    43,91
+    43,95
+    43,98
+    43,103
+    43,104
+    43,109
+    43,126
+    43,136
+    43,139
+    43,159
+    44,28
+    44,36
+    44,62
+    44,68
+    44,80
+    44,95
+    44,97
+    44,99
+    44,102
+    44,122
+    44,140
+    44,154
+    45,6
+    45,33
+    45,40
+    45,62
+    45,63
+    45,65
+    45,71
+    45,76
+    45,77
+    45,78
+    45,93
+    45,104
+    45,117
+    45,122
+    45,125
+    45,133
+    46,40
+    46,55
+    46,59
+    46,98
+    46,113
+    46,137
+    47,14
+    47,25
+    47,37
+    47,43
+    47,56
+    47,84
+    47,105
+    47,134
+    47,152
+    47,155
+    48,8
+    48,11
+    48,17
+    48,40
+    48,44
+    48,87
+    48,96
+    48,122
+    48,124
+    48,138
+    48,139
+    48,140
+    48,141
+    49,8
+    49,14
+    49,20
+    49,26
+    49,28
+    49,45
+    49,48
+    49,54
+    49,58
+    49,61
+    49,62
+    49,64
+    49,66
+    49,69
+    49,72
+    49,107
+    49,132
+    49,135
+    49,141
+    49,142
+    49,148
+    49,149
+    50,11
+    50,19
+    50,42
+    50,44
+    50,87
+    50,93
+    50,95
+    50,107
+    50,109
+    50,124
+    50,134
+    50,146
+    50,160
+}
+
+seguir = {
+id_seguidor:int,id_seguido:int
+
+    1,7
+    2,6
+    2,10
+    2,21
+    2,23
+    2,24
+    2,41
+    2,48
+    3,2
+    3,9
+    3,19
+    3,21
+    3,23
+    3,26
+    3,27
+    3,39
+    3,41
+    3,47
+    3,49
+    4,8
+    4,19
+    4,37
+    4,42
+    5,9
+    5,16
+    5,19
+    5,29
+    5,43
+    5,46
+    6,2
+    6,3
+    6,5
+    6,15
+    6,21
+    6,28
+    6,33
+    6,34
+    6,38
+    6,42
+    6,44
+    7,21
+    7,46
+    8,4
+    8,13
+    8,18
+    8,32
+    9,3
+    9,5
+    9,10
+    9,17
+    9,39
+    9,40
+    9,50
+    10,7
+    10,11
+    10,19
+    10,21
+    10,22
+    10,44
+    11,12
+    11,13
+    11,21
+    11,29
+    12,24
+    12,32
+    12,50
+    13,3
+    13,8
+    13,15
+    14,22
+    14,38
+    15,35
+    16,8
+    16,20
+    16,27
+    16,30
+    16,32
+    16,37
+    16,46
+    17,13
+    17,14
+    17,46
+    17,47
+    17,48
+    17,50
+    18,6
+    18,8
+    18,9
+    18,29
+    19,6
+    19,20
+    19,23
+    19,31
+    19,35
+    19,49
+    19,50
+    20,11
+    20,12
+    20,26
+    20,29
+    20,32
+    20,33
+    20,36
+    21,7
+    21,13
+    21,42
+    22,9
+    22,37
+    22,39
+    23,2
+    23,4
+    23,16
+    23,20
+    23,29
+    23,34
+    23,40
+    24,5
+    24,15
+    24,16
+    24,29
+    24,30
+    24,33
+    24,34
+    24,44
+    24,49
+    25,6
+    25,10
+    25,22
+    25,24
+    25,31
+    25,33
+    25,37
+    25,40
+    25,42
+    26,9
+    26,20
+    26,21
+    26,24
+    26,33
+    26,35
+    27,4
+    27,12
+    27,16
+    27,31
+    27,37
+    27,40
+    27,50
+    28,1
+    28,8
+    28,9
+    28,11
+    28,18
+    28,26
+    28,33
+    29,12
+    29,14
+    29,16
+    29,24
+    29,40
+    30,5
+    30,14
+    30,16
+    30,32
+    30,44
+    30,50
+    31,16
+    31,17
+    31,24
+    31,29
+    31,34
+    32,33
+    32,39
+    32,41
+    33,10
+    33,15
+    33,24
+    33,36
+    33,37
+    33,50
+    34,3
+    34,10
+    34,23
+    34,24
+    34,25
+    34,27
+    34,35
+    35,19
+    35,22
+    35,48
+    36,2
+    36,7
+    36,8
+    36,13
+    36,35
+    36,37
+    36,41
+    36,47
+    37,9
+    37,17
+    37,29
+    37,47
+    38,12
+    39,12
+    39,34
+    39,35
+    39,46
+    40,1
+    40,19
+    40,23
+    40,35
+    41,2
+    41,4
+    41,7
+    41,12
+    41,20
+    41,26
+    41,36
+    41,40
+    42,11
+    42,13
+    42,14
+    42,18
+    42,20
+    42,22
+    42,45
+    42,50
+    43,10
+    43,19
+    43,22
+    43,23
+    43,26
+    43,28
+    43,40
+    43,45
+    44,11
+    44,29
+    44,30
+    44,31
+    44,34
+    45,4
+    45,9
+    45,29
+    45,31
+    45,32
+    45,41
+    46,5
+    46,6
+    46,15
+    46,21
+    46,29
+    46,34
+    46,47
+    47,16
+    47,23
+    47,28
+    47,29
+    47,39
+    47,43
+    48,29
+    48,49
+    49,5
+    49,11
+    49,24
+    49,46
+    50,4
+    50,9
+    50,19
+    50,30
+    50,32
+    50,37
+    50,38
+    50,40
+    50,42
+    51,5
+    51,9
+    51,10
+    51,13
+    51,22
+    52,9
+    52,11
+    52,24
+    52,31
+    52,36
+    52,39
+    52,44
+    52,48
+    53,9
+    53,29
+    53,42
+    54,10
+    54,13
+    54,28
+    54,42
+    54,45
+    54,48
+    55,7
+    55,8
+    55,11
+    55,21
+    55,39
+}
+
